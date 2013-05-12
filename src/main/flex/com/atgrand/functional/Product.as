@@ -1,5 +1,5 @@
 package com.atgrand.functional {
-import com.atgrand.functional.collections.IIterator;
+import com.atgrand.functional.collections.IFuncIterator;
 import com.atgrand.functional.util.isAbstract;
 import com.atgrand.functional.util.ne;
 import com.atgrand.functional.util.requireRange;
@@ -66,7 +66,7 @@ public class Product implements IProduct {
 
     protected function validateIndex(i:int):void { requireRange(i, productArity) }
 
-    public function get iterator():IIterator {
+    public function get iterator():IFuncIterator {
         return new ProductIterator(this)
     }
 }

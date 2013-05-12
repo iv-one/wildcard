@@ -1,13 +1,13 @@
 package com.atgrand.functional.collections.immutable {
 
 import com.atgrand.functional._;
-import com.atgrand.functional.collections.IList;
+import com.atgrand.functional.collections.IFuncList;
 import com.atgrand.functional.collections.list;
 import com.atgrand.testing.bdd.base.Specifications;
 
 public class CompositeWildcardListTest extends Specifications {
 
-    private var _list:IList;
+    private var _list:IFuncList;
 
     [Before]
     public function setUp():void {

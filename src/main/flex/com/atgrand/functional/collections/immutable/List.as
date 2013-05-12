@@ -3,9 +3,9 @@ import com.atgrand.functional.IFunkObject;
 import com.atgrand.functional.IImmutable;
 import com.atgrand.functional.Product;
 import com.atgrand.functional._;
-import com.atgrand.functional.collections.IIterable
-import com.atgrand.functional.collections.IIterator
-import com.atgrand.functional.collections.IList;
+import com.atgrand.functional.collections.IFuncIterable
+import com.atgrand.functional.collections.IFuncIterator
+import com.atgrand.functional.collections.IFuncList;
 import com.atgrand.functional.collections.nil;
 import com.atgrand.functional.collections.toList
 import com.atgrand.functional.error.NoSuchElementError;
@@ -24,7 +24,7 @@ import flash.utils.Dictionary;
 import mx.collections.ArrayCollection;
 import mx.collections.ArrayList;
 
-public final class List extends Product implements IImmutable, IList {
+public final class List extends Product implements IImmutable, IFuncList {
     /**
      * Creates and returns a closure accepting a function to fill a list
      * with a defined amount of elements.
@@ -38,8 +38,8 @@ public final class List extends Product implements IImmutable, IList {
      * </pre>
      */
     public static function fill(n:int):Function {
-        return function (x:Function):IList {
-            var l:IList = nil;
+        return function (x:Function):IFuncList {
+            var l:IFuncList = nil;
 
             while (--n > -1) {
                 l = l.prepend(x())
@@ -55,8 +55,8 @@ public final class List extends Product implements IImmutable, IList {
      * @param array The array to transform to a list.
      * @return The List.&lt;A&gt; representation of a given Array.&lt;A&gt;.
      */
-    public static function fromArray(array:Array):IList {
-        var l:IList = nil;
+    public static function fromArray(array:Array):IFuncList {
+        var l:IFuncList = nil;
         var n:int = array.length;
 
         while (--n > -1) {
@@ -72,8 +72,8 @@ public final class List extends Product implements IImmutable, IList {
      * @param string The string to transform to a list.
      * @return The List.&lt;String&gt; representation of a given string.
      */
-    public static function fromString(string:String):IList {
-        var l:IList = nil;
+    public static function fromString(string:String):IFuncList {
+        var l:IFuncList = nil;
         var n:int = string.length;
 
         while (--n > -1) {
@@ -93,7 +93,7 @@ public final class List extends Product implements IImmutable, IList {
      * Private backing variable for the tail property.
      * @private
      */
-    private var _tail:IList;
+    private var _tail:IFuncList;
 
     /**
      * Private backing variable for the length property.
@@ -113,7 +113,7 @@ public final class List extends Product implements IImmutable, IList {
      * @param head The head of the list.
      * @param tail The tail of the list.
      */
-    public function List(head:*, tail:IList) {
+    public function List(head:*, tail:IFuncList) {
         _head = head;
         _tail = tail
     }
@@ -134,7 +134,7 @@ public final class List extends Product implements IImmutable, IList {
             return _length
         }
 
-        var p:IList = this;
+        var p:IFuncList = this;
         var length:int = 0;
 
         while (p.nonEmpty) {
@@ -159,7 +159,7 @@ public final class List extends Product implements IImmutable, IList {
      * @inheritDoc
      */
     override public function equals(that:IFunkObject):Boolean {
-        if (that is IList) {
+        if (that is IFuncList) {
             return super.equals(that)
         }
 
@@ -179,7 +179,7 @@ public final class List extends Product implements IImmutable, IList {
     override public function productElement(i:int):* {
         validateIndex(i);
 
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (i == 0) {
@@ -203,14 +203,14 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function prepend(value:*):IList {
+    public function prepend(value:*):IFuncList {
         return new List(value, this)
     }
 
     /**
      * @inheritDoc
      */
-    public function prependAll(value:IList):IList {
+    public function prependAll(value:IFuncList):IFuncList {
         const n:int = value.size;
 
         if (0 == n) {
@@ -219,7 +219,7 @@ public final class List extends Product implements IImmutable, IList {
 
         const buffer:Vector.<List> = new Vector.<List>(n, true);
         const m:int = n - 1;
-        var p:IList = value;
+        var p:IFuncList = value;
         var i:int, j:int;
 
         i = 0;
@@ -249,7 +249,7 @@ public final class List extends Product implements IImmutable, IList {
      * @inheritDoc
      */
     public function contains(value:*):Boolean {
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (eq(p.head, value)) {
@@ -268,7 +268,7 @@ public final class List extends Product implements IImmutable, IList {
         f = fun(f);
         
         var n:int = 0;
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (f(p.head)) {
@@ -291,10 +291,10 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function drop(n:int):IList {
+    public function drop(n:int):IFuncList {
         require(n >= 0, "n must be positive.");
 
-        var p:IList = this;
+        var p:IFuncList = this;
 
         for (var i:int = 0; i < n; ++i) {
             if (p.isEmpty) {
@@ -310,7 +310,7 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function dropRight(n:int):IList {
+    public function dropRight(n:int):IFuncList {
         require(n >= 0, "n must be positive.");
 
         if (0 == n) {
@@ -325,7 +325,7 @@ public final class List extends Product implements IImmutable, IList {
 
         const buffer:Vector.<List> = new Vector.<List>(n, true);
         const m:int = n - 1;
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int, j:int;
 
         for (i = 0; i < n; ++i) {
@@ -345,8 +345,8 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function dropWhile(f:Function):IList {
-        var p:IList = this;
+    public function dropWhile(f:Function):IFuncList {
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (!f(p.head)) {
@@ -365,7 +365,7 @@ public final class List extends Product implements IImmutable, IList {
     public function exists(f:*):Boolean {
         f = fun(f);
 
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (f(p.head)) {
@@ -381,11 +381,11 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function filter(f:*):IList {
+    public function filter(f:*):IFuncList {
 
         f = fun(f);
 
-        var p:IList = this;
+        var p:IFuncList = this;
         var q:List = null;
         var first:List = null;
         var last:List = null;
@@ -422,8 +422,8 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function filterNot(f:Function):IList {
-        var p:IList = this;
+    public function filterNot(f:Function):IFuncList {
+        var p:IFuncList = this;
         var q:List = null;
         var first:List = null;
         var last:List = null;
@@ -463,7 +463,7 @@ public final class List extends Product implements IImmutable, IList {
     public function find(f:*):* {
         f = fun(f);
 
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (f(p.head)) {
@@ -479,18 +479,18 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function flatMap(f:Function):IList {
+    public function flatMap(f:Function):IFuncList {
         var n:int = size;
-        const buffer:Vector.<IList> = new Vector.<IList>(n, true);
-        var p:IList = this;
+        const buffer:Vector.<IFuncList> = new Vector.<IFuncList>(n, true);
+        var p:IFuncList = this;
         var i:int;
 
         while (p.nonEmpty) {
-            buffer[i++] = IList(verifiedType(f(p.head), IList));
+            buffer[i++] = IFuncList(verifiedType(f(p.head), IFuncList));
             p = p.tail
         }
 
-        var list:IList = buffer[--n];
+        var list:IFuncList = buffer[--n];
 
         while (--n > -1) {
             list = list.prependAll(buffer[n])
@@ -504,7 +504,7 @@ public final class List extends Product implements IImmutable, IList {
      */
     public function foldLeft(x:*, f:Function):* {
         var value:* = x;
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             value = f(value, p.head);
@@ -533,7 +533,7 @@ public final class List extends Product implements IImmutable, IList {
      * @inheritDoc
      */
     public function forall(f:Function):Boolean {
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (!f(p.head)) {
@@ -550,7 +550,7 @@ public final class List extends Product implements IImmutable, IList {
      * @inheritDoc
      */
     public function foreach(f:Function):void {
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             f(p.head);
@@ -575,9 +575,9 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get indices():IList {
+    public function get indices():IFuncList {
         var n:int = size;
-        var p:IList = nil;
+        var p:IFuncList = nil;
 
         while (--n > -1) {
             p = p.prepend(n)
@@ -589,7 +589,7 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get init():IList {
+    public function get init():IFuncList {
         return dropRight(1)
     }
 
@@ -604,7 +604,7 @@ public final class List extends Product implements IImmutable, IList {
      * @inheritDoc
      */
     public function get last():* {
-        var p:IList = this;
+        var p:IFuncList = this;
         var value:* = null;
         while (p.nonEmpty) {
             value = p.head;
@@ -624,14 +624,14 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function map(f:*):IList {
+    public function map(f:*):IFuncList {
         f = fun(f);
 
         const n:int = size;
         const buffer:Vector.<List> = new Vector.<List>(n, true);
         const m:int = n - 1;
 
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int, j:int;
 
         for (i = 0; i < n; ++i) {
@@ -660,7 +660,7 @@ public final class List extends Product implements IImmutable, IList {
         var m:int;
         var o:int;
 
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (f(p.head)) {
@@ -696,7 +696,7 @@ public final class List extends Product implements IImmutable, IList {
      */
     public function reduceLeft(f:Function):* {
         var value:* = head;
-        var p:IList = this._tail;
+        var p:IFuncList = this._tail;
 
         while (p.nonEmpty) {
             value = f(value, p.head);
@@ -724,9 +724,9 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get reverse():IList {
-        var result:IList = nil;
-        var p:IList = this;
+    public function get reverse():IFuncList {
+        var result:IFuncList = nil;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             result = result.prepend(p.head);
@@ -739,7 +739,7 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get tail():IList {
+    public function get tail():IFuncList {
         return _tail
     }
 
@@ -753,7 +753,7 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function take(n:int):IList {
+    public function take(n:int):IFuncList {
         require(n >= 0, "n must be positive.");
 
         if (n > size) {
@@ -764,7 +764,7 @@ public final class List extends Product implements IImmutable, IList {
 
         const buffer:Vector.<List> = new Vector.<List>(n, true);
         const m:int = n - 1;
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int, j:int;
 
         for (i = 0; i < n; ++i) {
@@ -784,7 +784,7 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function takeRight(n:int):IList {
+    public function takeRight(n:int):IFuncList {
         require(n >= 0, "n must be positive.");
 
         if (n > size) {
@@ -799,7 +799,7 @@ public final class List extends Product implements IImmutable, IList {
             return this
         }
 
-        var p:IList = this;
+        var p:IFuncList = this;
 
         for (var i:int = 0; i < n; ++i) {
             p = p.tail
@@ -811,9 +811,9 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function takeWhile(f:Function):IList {
+    public function takeWhile(f:Function):IFuncList {
         const buffer:Vector.<List> = new Vector.<List>();
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int, j:int;
         var n:int = 0;
 
@@ -848,7 +848,7 @@ public final class List extends Product implements IImmutable, IList {
     public function get toArray():Array {
         const n:int = size;
         const array:Array = new Array(n);
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int;
 
         for (i = 0; i < n; ++i) {
@@ -862,13 +862,13 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function zip(that:IList):IList {
+    public function zip(that:IFuncList):IFuncList {
         const n:int = Math.min(size, that.size);
         const m:int = n - 1;
         const buffer:Vector.<List> = new Vector.<List>(n, true);
         var i:int, j:int;
 
-        var p:IList = this, q:IList = that;
+        var p:IFuncList = this, q:IFuncList = that;
 
         for (i = 0; i < n; ++i) {
             buffer[i] = new List(tuple2(p.head, q.head), null);
@@ -888,13 +888,13 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get zipWithIndex():IList {
+    public function get zipWithIndex():IFuncList {
         const n:int = size;
         const m:int = n - 1;
         const buffer:Vector.<List> = new Vector.<List>(n, true);
         var i:int, j:int;
 
-        var p:IList = this;
+        var p:IFuncList = this;
 
         for (i = 0; i < n; ++i) {
             buffer[i] = new List(tuple2(p.head, i), null);
@@ -915,7 +915,7 @@ public final class List extends Product implements IImmutable, IList {
      */
     public function findIndexOf(f:Function):int {
         var index:int = 0;
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (f(p.head)) {
@@ -932,8 +932,8 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get flatten():IList {
-        return flatMap(function (x:*):IList { return x is IList ? x : toList(x) })
+    public function get flatten():IFuncList {
+        return flatMap(function (x:*):IFuncList { return x is IFuncList ? x : toList(x) })
     }
 
     /**
@@ -941,7 +941,7 @@ public final class List extends Product implements IImmutable, IList {
      */
     public function indexOf(value:*):int {
         var index:int = 0;
-        var p:IList = this;
+        var p:IFuncList = this;
 
         while (p.nonEmpty) {
             if (eq(p.head, value)) {
@@ -963,7 +963,7 @@ public final class List extends Product implements IImmutable, IList {
         const m:int = n - 1;
 
         var buffer:String = "";
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int;
 
         for (i = 0; i < n; ++i) {
@@ -982,17 +982,17 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    override public function get iterator():IIterator {
+    override public function get iterator():IFuncIterator {
         return new ListIterator(this)
     }
 
     /**
      * @inheritDoc
      */
-    public function append(value:*):IList {
+    public function append(value:*):IFuncList {
         const n:int = size;
         const buffer:Vector.<List> = new Vector.<List>(n + 1, true);
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int, j:int;
 
         i = 0;
@@ -1014,11 +1014,11 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function appendAll(value:IList):IList {
+    public function appendAll(value:IFuncList):IFuncList {
         const n:int = size;
         const m:int = n - 1;
         const buffer:Vector.<List> = new Vector.<List>(n, true);
-        var p:IList = this;
+        var p:IFuncList = this;
         var i:int, j:int;
 
         i = 0;
@@ -1040,28 +1040,28 @@ public final class List extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function prependIterator(iterator:IIterator):IList {
+    public function prependIterator(iterator:IFuncIterator):IFuncList {
         return prependAll(iterator.toList)
     }
 
     /**
      * @inheritDoc
      */
-    public function appendIterator(iterator:IIterator):IList {
+    public function appendIterator(iterator:IFuncIterator):IFuncList {
         return appendAll(iterator.toList)
     }
 
     /**
      * @inheritDoc
      */
-    public function prependIterable(iterable:IIterable):IList {
+    public function prependIterable(iterable:IFuncIterable):IFuncList {
         return prependAll(iterable.iterator.toList)
     }
 
     /**
      * @inheritDoc
      */
-    public function appendIterable(iterable:IIterable):IList {
+    public function appendIterable(iterable:IFuncIterable):IFuncList {
         return appendAll(iterable.iterator.toList)
     }
 
@@ -1093,8 +1093,8 @@ public final class List extends Product implements IImmutable, IList {
         return toArray;
     }
 
-    public function uniq(f:*):IList {
-        var p:IList = this;
+    public function uniq(f:*):IFuncList {
+        var p:IFuncList = this;
         var q:List = null;
         var first:List = null;
         var last:List = null;

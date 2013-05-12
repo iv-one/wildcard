@@ -13,7 +13,7 @@ import mx.collections.ArrayCollection;
 
 import mx.collections.ArrayList;
 
-internal final class NilImpl extends Product implements IImmutable, IList {
+internal final class NilImpl extends Product implements IImmutable, IFuncList {
     /**
      * @inheritDoc
      */
@@ -38,7 +38,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function drop(n:int):IList {
+    public function drop(n:int):IFuncList {
         require(n >= 0, "n must be positive.")
         return this
     }
@@ -46,7 +46,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function dropRight(n:int):IList {
+    public function dropRight(n:int):IFuncList {
         require(n >= 0, "n must be positive.")
         return this
     }
@@ -54,7 +54,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function dropWhile(f:Function):IList {
+    public function dropWhile(f:Function):IFuncList {
         return this
     }
 
@@ -68,14 +68,14 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function filter(f:*):IList {
+    public function filter(f:*):IFuncList {
         return this
     }
 
     /**
      * @inheritDoc
      */
-    public function filterNot(f:Function):IList {
+    public function filterNot(f:Function):IFuncList {
         return this
     }
 
@@ -89,7 +89,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function flatMap(f:Function):IList {
+    public function flatMap(f:Function):IFuncList {
         return this
     }
 
@@ -144,14 +144,14 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get indices():IList {
+    public function get indices():IFuncList {
         return this
     }
 
     /**
      * @inheritDoc
      */
-    public function get init():IList {
+    public function get init():IFuncList {
         return this
     }
 
@@ -179,7 +179,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function map(f:*):IList {
+    public function map(f:*):IFuncList {
         return this
     }
 
@@ -193,14 +193,14 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function prepend(value:*):IList {
+    public function prepend(value:*):IFuncList {
         return new List(value, this)
     }
 
     /**
      * @inheritDoc
      */
-    public function prependAll(value:IList):IList {
+    public function prependAll(value:IFuncList):IFuncList {
         return value
     }
 
@@ -221,14 +221,14 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get reverse():IList {
+    public function get reverse():IFuncList {
         return this
     }
 
     /**
      * @inheritDoc
      */
-    public function get tail():IList {
+    public function get tail():IFuncList {
         throw new NoSuchElementError()
     }
 
@@ -242,7 +242,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function take(n:int):IList {
+    public function take(n:int):IFuncList {
         require(n >= 0, "n must be positive.")
         return this
     }
@@ -250,7 +250,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function takeRight(n:int):IList {
+    public function takeRight(n:int):IFuncList {
         require(n >= 0, "n must be positive.")
         return this
     }
@@ -258,21 +258,21 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function takeWhile(f:Function):IList {
+    public function takeWhile(f:Function):IFuncList {
         return this
     }
 
     /**
      * @inheritDoc
      */
-    public function zip(that:IList):IList {
+    public function zip(that:IFuncList):IFuncList {
         return this
     }
 
     /**
      * @inheritDoc
      */
-    public function get zipWithIndex():IList {
+    public function get zipWithIndex():IFuncList {
         return this
     }
 
@@ -307,7 +307,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function get flatten():IList {
+    public function get flatten():IFuncList {
         return this
     }
 
@@ -364,49 +364,49 @@ internal final class NilImpl extends Product implements IImmutable, IList {
     /**
      * @inheritDoc
      */
-    public function prependIterator(iterator:IIterator):IList {
+    public function prependIterator(iterator:IFuncIterator):IFuncList {
         return iterator.toList
     }
 
     /**
      * @inheritDoc
      */
-    public function prependIterable(iterable:IIterable):IList {
+    public function prependIterable(iterable:IFuncIterable):IFuncList {
         return iterable.iterator.toList
     }
 
     /**
      * @inheritDoc
      */
-    public function append(value:*):IList {
+    public function append(value:*):IFuncList {
         return new List(value, this)
     }
 
     /**
      * @inheritDoc
      */
-    public function appendAll(value:IList):IList {
+    public function appendAll(value:IFuncList):IFuncList {
         return value
     }
 
     /**
      * @inheritDoc
      */
-    public function appendIterator(iterator:IIterator):IList {
+    public function appendIterator(iterator:IFuncIterator):IFuncList {
         return iterator.toList
     }
 
     /**
      * @inheritDoc
      */
-    public function appendIterable(iterable:IIterable):IList {
+    public function appendIterable(iterable:IFuncIterable):IFuncList {
         return iterable.iterator.toList
     }
 
     /**
      * @inheritDoc
      */
-    override public function get iterator():IIterator {
+    override public function get iterator():IFuncIterator {
         return NilIterator.INSTANCE
     }
 
@@ -426,7 +426,7 @@ internal final class NilImpl extends Product implements IImmutable, IList {
         return [];
     }
 
-    public function uniq(f:*):IList {
+    public function uniq(f:*):IFuncList {
         return nil;
     }
 }

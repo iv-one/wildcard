@@ -4,7 +4,7 @@ import com.atgrand.functional.util.isVector;
 
 import mx.collections.IList;
 
-public function list(...rest):com.atgrand.functional.collections.IList {
+public function list(...rest):com.atgrand.functional.collections.IFuncList {
     var items:*;
 
     if (rest.length == 1) {
@@ -23,7 +23,7 @@ public function list(...rest):com.atgrand.functional.collections.IList {
         items = rest;
     }
 
-    var result:com.atgrand.functional.collections.IList = nil;
+    var result:com.atgrand.functional.collections.IFuncList = nil;
     var n:int = items.length;
 
     while (--n > -1) {

@@ -1,7 +1,7 @@
 package com.atgrand.functional.collections.immutable {
 import com.atgrand.functional._;
 import com.atgrand.functional.closure;
-import com.atgrand.functional.collections.IList;
+import com.atgrand.functional.collections.IFuncList;
 import com.atgrand.functional.collections.Range;
 import com.atgrand.functional.collections.list;
 import com.atgrand.functional.collections.nil;
@@ -58,7 +58,7 @@ public class ListTest extends Specifications {
         assertEquals(2, list(1, 1, 2).drop(2).head);
         assertStrictlyEquals(nil, list(1, 2).drop(2));
         assertTrue(list(3, 4).equals(list(1, 2, 3, 4).drop(2)));
-        const l:IList = list(1, 2, 3);
+        const l:IFuncList = list(1, 2, 3);
         assertStrictlyEquals(l, l.drop(0))
     }
 
@@ -68,14 +68,14 @@ public class ListTest extends Specifications {
         assertEquals(1, list(1, 2, 2).dropRight(2).head);
         assertStrictlyEquals(nil, list(1, 2).dropRight(2));
         assertTrue(list(1, 2).equals(list(1, 2, 3, 4).dropRight(2)));
-        const l:IList = list(1, 2, 3);
+        const l:IFuncList = list(1, 2, 3);
         assertStrictlyEquals(l, l.dropRight(0))
     }
 
     [Test]
     public function testDropWhile():void {
         assertStrictlyEquals(nil, list(1, 2, 3, 4).dropWhile(mapTrue));
-        const l:IList = list(1, 2, 3);
+        const l:IFuncList = list(1, 2, 3);
         assertStrictlyEquals(l, l.dropWhile(mapFalse))
     }
 
@@ -88,14 +88,14 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testFilter():void {
-        const l:IList = list(1, 2, 3);
+        const l:IFuncList = list(1, 2, 3);
         assertStrictlyEquals(l, l.filter(mapTrue));
         assertTrue(list(2, 4, 6, 8, 10).equals(Range.to(1, 10).filter(_.isEven)))
     }
 
     [Test]
     public function testFilterNot():void {
-        const l:IList = list(1, some(2), 1, some(2));
+        const l:IFuncList = list(1, some(2), 1, some(2));
         assertEquals(l.size - 2, l.filterNot(_.equals(some(2))).size);
         assertEquals(l.size, l.filterNot(mapFalse).size);
         assertStrictlyEquals(nil, l.filterNot(mapTrue))
@@ -115,7 +115,7 @@ public class ListTest extends Specifications {
     [Test]
     public function testFlatMap():void {
         assertTrue(list("a", "b", "c", "d").equals(list("a", "b", "c", "d").flatMap(toList)));
-        assertTrue(list(1, 3).equals(list(1, 2, 3).flatMap(function (x:int):IList {
+        assertTrue(list(1, 3).equals(list(1, 2, 3).flatMap(function (x:int):IFuncList {
             return x == 2 ? nil : list(x)
         })));
 
@@ -211,7 +211,7 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testInit():void {
-        const l:IList = list(1, 2, 3);
+        const l:IFuncList = list(1, 2, 3);
         assertEquals(l.size - 1, l.init.size);
         assertEquals("tes", toList("test").init.reduceLeft(_.plus_))
     }
@@ -229,16 +229,16 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testMap():void {
-        const l:IList = list(2, 4, 6, 8);
+        const l:IFuncList = list(2, 4, 6, 8);
         assertEquals(l.reduceLeft(_.plus_) / 2, l.map(_.divideBy(2)).reduceLeft(_.plus_))
     }
 
     [Test]
     public function testPartition():void {
-        const l:IList = Range.to(1, 10);
+        const l:IFuncList = Range.to(1, 10);
         const p:ITuple2 = l.partition(_.isEven);
-        assertTrue(p._1 is IList);
-        assertTrue(p._2 is IList);
+        assertTrue(p._1 is IFuncList);
+        assertTrue(p._2 is IFuncList);
         assertEquals(5, p._1.size);
         assertEquals(5, p._2.size);
         assertTrue(l.filter(_.isEven).equals(p._1));
@@ -254,7 +254,7 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testPrependAll():void {
-        const l:IList = list({}, {}, {});
+        const l:IFuncList = list({}, {}, {});
         assertEquals(l.size, nil.prependAll(l).size);
         for (var i:int = 0, n:int = l.size; i < n; ++i) {
             assertStrictlyEquals(l.get(i), nil.prependAll(l).get(i))
@@ -393,7 +393,7 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testAppend():void {
-        const l:IList = list(1);
+        const l:IFuncList = list(1);
         assertTrue(list(1, 2, 3).equals(list(1, 2).append(3)));
         assertTrue(l.size < l.append(null).size);
         assertTrue(list(1, 2, nil).equals(list(1, 2).append(nil)))
@@ -401,8 +401,8 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testAppendAll():void {
-        const l0:IList = list(1, 2, 3);
-        const l1:IList = list(4, 5, 6);
+        const l0:IFuncList = list(1, 2, 3);
+        const l1:IFuncList = list(4, 5, 6);
 
         assertTrue(list(1, 2, 3, 4, 5, 6).equals(l0.appendAll(l1)));
         assertTrue(l0.equals(l0.appendAll(nil)))
@@ -417,8 +417,8 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testAppendIterable():void {
-        const l0:IList = list(1, 2, 3);
-        const l1:IList = list(4, 5, 6);
+        const l0:IFuncList = list(1, 2, 3);
+        const l1:IFuncList = list(4, 5, 6);
 
         assertTrue(list(1, 2, 3, 4, 5, 6).equals(l0.appendIterable(l1)));
         assertTrue(l0.equals(l0.appendIterable(nil)))
@@ -426,8 +426,8 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testAppendIterator():void {
-        const l0:IList = list(1, 2, 3);
-        const l1:IList = list(4, 5, 6);
+        const l0:IFuncList = list(1, 2, 3);
+        const l1:IFuncList = list(4, 5, 6);
 
         assertTrue(list(1, 2, 3, 4, 5, 6).equals(l0.appendIterator(l1.iterator)));
         assertTrue(l0.equals(l0.appendIterator(nil.iterator)))
@@ -435,8 +435,8 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testPrependIterable():void {
-        const l0:IList = list(1, 2, 3);
-        const l1:IList = list(4, 5, 6);
+        const l0:IFuncList = list(1, 2, 3);
+        const l1:IFuncList = list(4, 5, 6);
 
         assertTrue(list(4, 5, 6, 1, 2, 3).equals(l0.prependIterable(l1)));
         assertTrue(l0.equals(l0.prependIterable(nil)))
@@ -444,8 +444,8 @@ public class ListTest extends Specifications {
 
     [Test]
     public function testPrependIterator():void {
-        const l0:IList = list(1, 2, 3);
-        const l1:IList = list(4, 5, 6);
+        const l0:IFuncList = list(1, 2, 3);
+        const l1:IFuncList = list(4, 5, 6);
 
         assertTrue(list(4, 5, 6, 1, 2, 3).equals(l0.prependIterator(l1.iterator)));
         assertTrue(l0.equals(l0.prependIterator(nil.iterator)))

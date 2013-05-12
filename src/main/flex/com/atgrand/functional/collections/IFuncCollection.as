@@ -1,5 +1,5 @@
 package com.atgrand.functional.collections {
-public interface ICollection extends IIterable {
+public interface IFuncCollection extends IFuncIterable {
     /**
      * The length of the collection.
      */

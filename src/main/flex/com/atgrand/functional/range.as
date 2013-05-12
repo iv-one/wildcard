@@ -4,10 +4,10 @@
  * Time: 15:41
  */
 package com.atgrand.functional {
-import com.atgrand.functional.collections.IList;
+import com.atgrand.functional.collections.IFuncList;
 import com.atgrand.functional.collections.Range;
 
-public function range(from:int, to:int):IList {
+public function range(from:int, to:int):IFuncList {
     return Range.to(from, to);
 }
 }

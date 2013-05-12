@@ -1,15 +1,15 @@
 package com.atgrand.functional.ioc {
 import flash.utils.Dictionary
 
-import com.atgrand.functional.collections.IList
+import com.atgrand.functional.collections.IFuncList
 import com.atgrand.functional.collections.nil
 import com.atgrand.functional.ioc.error.BindingError
 import com.atgrand.functional.util.isAbstract
 
 public final class Injector {
     private static const _map:Dictionary = new Dictionary
-    private static var _scopes:IList = nil
-    private static var _modules:IList = nil
+    private static var _scopes:IFuncList = nil
+    private static var _modules:IFuncList = nil
     private static var _currentScope:IModule
 
     public static function initialize(module:IModule):IModule {
@@ -35,7 +35,7 @@ public final class Injector {
     module_internal static function scopeOf(klass:Class):IModule {
         var result:IModule = null
         var module:IModule = null
-        var modules:IList = _modules
+        var modules:IFuncList = _modules
 
         while (modules.nonEmpty) {
             module = IModule(modules.head)
@@ -65,7 +65,7 @@ public final class Injector {
         }
 
         var module:IModule = null
-        var modules:IList = _modules
+        var modules:IFuncList = _modules
 
         while (modules.nonEmpty) {
             module = IModule(modules.head)

@@ -1,12 +1,12 @@
 package com.atgrand.functional {
-import com.atgrand.functional.collections.IIterator
-import com.atgrand.functional.collections.IList
+import com.atgrand.functional.collections.IFuncIterator
+import com.atgrand.functional.collections.IFuncList
 import com.atgrand.functional.collections.IteratorUtil
 import com.atgrand.functional.option.IOption
 import com.atgrand.functional.option.none
 import com.atgrand.functional.option.some
 
-internal final class ProductIterator implements IIterator {
+internal final class ProductIterator implements IFuncIterator {
     private var _product:IProduct;
     private var _arity:int;
     private var _index:int = 0;
@@ -45,7 +45,7 @@ internal final class ProductIterator implements IIterator {
     /**
      * @inheritDoc
      */
-    public function get toList():IList {
+    public function get toList():IFuncList {
         return IteratorUtil.toList(this)
     }
 

@@ -1,10 +1,10 @@
 package com.atgrand.functional.collections {
 
-public function toList(value:*):IList {
-    var l:IList = nil;
+public function toList(value:*):IFuncList {
+    var l:IFuncList = nil;
     var n:int;
 
-    if (value is IList) {
+    if (value is IFuncList) {
         return value
     }
     else if (value is String) {

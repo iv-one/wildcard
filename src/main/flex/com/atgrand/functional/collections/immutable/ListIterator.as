@@ -1,7 +1,7 @@
 package com.atgrand.functional.collections.immutable {
 import com.atgrand.functional.IFunkObject
-import com.atgrand.functional.collections.IIterator
-import com.atgrand.functional.collections.IList
+import com.atgrand.functional.collections.IFuncIterator
+import com.atgrand.functional.collections.IFuncList
 import com.atgrand.functional.collections.IteratorUtil
 import com.atgrand.functional.collections.list
 import com.atgrand.functional.collections.nil
@@ -16,8 +16,8 @@ import com.atgrand.functional.option.some
  *
  * @private
  */
-internal final class ListIterator implements IIterator {
-    private var _list:IList
+internal final class ListIterator implements IFuncIterator {
+    private var _list:IFuncList
 
     /**
      * Creates a new ListIterator object.
@@ -25,7 +25,7 @@ internal final class ListIterator implements IIterator {
      * @private
      * @param list The backing list.
      */
-    public function ListIterator(list:IList) {
+    public function ListIterator(list:IFuncList) {
         _list = list
     }
 
@@ -75,7 +75,7 @@ internal final class ListIterator implements IIterator {
     /**
      * @inheritDoc
      */
-    public function get toList():IList {
+    public function get toList():IFuncList {
         return IteratorUtil.toList(this)
     }
 }

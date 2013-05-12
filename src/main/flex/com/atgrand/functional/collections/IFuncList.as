@@ -6,7 +6,7 @@ import com.atgrand.functional.tuple.ITuple2;
 import mx.collections.ArrayCollection;
 import mx.collections.ArrayList;
 
-public interface IList extends IProduct, ICollection {
+public interface IFuncList extends IProduct, IFuncCollection {
     /**
      * Tests whether or not the list contains the given element.
      *
@@ -37,7 +37,7 @@ public interface IList extends IProduct, ICollection {
      * @param n The number of elements to drop.
      * @return The resulting suffix of type IList.&lt;A&gt;.
      */
-    function drop(n:int):IList
+    function drop(n:int):IFuncList
 
     /**
      * Drop <code>n</code> elements from the list and return the prefix.
@@ -45,7 +45,7 @@ public interface IList extends IProduct, ICollection {
      * @param n The number of elements to drop.
      * @return The resulting prefix of type IList.&lt;A&gt;.
      */
-    function dropRight(n:int):IList
+    function dropRight(n:int):IFuncList
 
     /**
      * Drop the longest prefix fulfilling predicate <code>f</code> from the list and return the suffix.
@@ -53,7 +53,7 @@ public interface IList extends IProduct, ICollection {
      * @param f The predicate <code>A → Boolean</code>
      * @return The resulting suffix of type IList.&lt;A&gt;
      */
-    function dropWhile(f:Function):IList
+    function dropWhile(f:Function):IFuncList
 
     /**
      * Test whether or not at least one element fulfills the given predicate <code>f</code>.
@@ -69,7 +69,7 @@ public interface IList extends IProduct, ICollection {
      * @param f The predicate <code>A → Boolean</code>
      * @return A list IList.&lt;A&gt; of all elements that fulfill the predicate <code>f</code>
      */
-    function filter(f:*):IList
+    function filter(f:*):IFuncList
 
     /**
      * Filter and return all elements that do not fulfill <code>f</code>.
@@ -77,7 +77,7 @@ public interface IList extends IProduct, ICollection {
      * @param f The predicate <code>A → Boolean</code>
      * @return A list IList.&lt;A&gt; of all elements that do not fulfill the predicate <code>f</code>
      */
-    function filterNot(f:Function):IList
+    function filterNot(f:Function):IFuncList
 
     /**
      * Search and return the first element that fulfills <code>f</code>.
@@ -102,12 +102,12 @@ public interface IList extends IProduct, ICollection {
      * @param f The mapping <code>A → IList.&lt;B&gt;</code>
      * @return The flattened result of type IList.&lt;B&gt;
      */
-    function flatMap(f:Function):IList
+    function flatMap(f:Function):IFuncList
 
     /**
      * A flat representation of the list.
      */
-    function get flatten():IList
+    function get flatten():IFuncList
 
     /**
      * Fold the list with the initial value <code>x</code> from the left.
@@ -176,12 +176,12 @@ public interface IList extends IProduct, ICollection {
     /**
      * An IList.&lt;int&gt; that contains of the indices of the current list.
      */
-    function get indices():IList
+    function get indices():IFuncList
 
     /**
      * The IList.&lt;A&gt; without its rightmost element.
      */
-    function get init():IList
+    function get init():IFuncList
 
     /**
      * Whether or not is equal to <code>nil</code>.
@@ -206,7 +206,7 @@ public interface IList extends IProduct, ICollection {
      * @param f The mapping <code>A → B</code>
      * @return The mapped list of type IList.&lt;B&gt;.
      */
-    function map(f:*):IList
+    function map(f:*):IFuncList
 
     /**
      * Partitions the list by a predicate <code>f</code> and returns a tuple as the result.
@@ -228,21 +228,21 @@ public interface IList extends IProduct, ICollection {
      *   list(1,2,3).equals(nil.prepend(3).prepend(2).prepend(1))
      * </pre>
      */
-    function prepend(value:*):IList
+    function prepend(value:*):IFuncList
 
-    function prependAll(value:IList):IList
+    function prependAll(value:IFuncList):IFuncList
 
-    function prependIterator(iterator:IIterator):IList
+    function prependIterator(iterator:IFuncIterator):IFuncList
 
-    function prependIterable(iterable:IIterable):IList
+    function prependIterable(iterable:IFuncIterable):IFuncList
 
-    function append(value:*):IList
+    function append(value:*):IFuncList
 
-    function appendAll(value:IList):IList
+    function appendAll(value:IFuncList):IFuncList
 
-    function appendIterator(iterator:IIterator):IList
+    function appendIterator(iterator:IFuncIterator):IFuncList
 
-    function appendIterable(iterable:IIterable):IList
+    function appendIterable(iterable:IFuncIterable):IFuncList
 
     /**
      *
@@ -258,26 +258,26 @@ public interface IList extends IProduct, ICollection {
      */
     function reduceRight(f:Function):*
 
-    function get reverse():IList
+    function get reverse():IFuncList
 
-    function get tail():IList
+    function get tail():IFuncList
 
     function get tailOption():IOption
 
-    function take(n:int):IList
+    function take(n:int):IFuncList
 
-    function takeRight(n:int):IList
+    function takeRight(n:int):IFuncList
 
     /**
      *
      * @param f A =&gt; Boolean
      * @return list.&lt;A&gt;
      */
-    function takeWhile(f:Function):IList
+    function takeWhile(f:Function):IFuncList
 
-    function zip(that:IList):IList
+    function zip(that:IFuncList):IFuncList
 
-    function get zipWithIndex():IList
+    function get zipWithIndex():IFuncList
 
     /**
      * Convert list to ArrayList
@@ -302,6 +302,6 @@ public interface IList extends IProduct, ICollection {
     /**
      * function uniq(f) - return IList of uniq by f() elements
      */
-    function uniq(f:*):IList;
+    function uniq(f:*):IFuncList;
 }
 }

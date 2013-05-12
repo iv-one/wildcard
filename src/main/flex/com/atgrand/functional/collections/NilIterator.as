@@ -4,7 +4,7 @@ import com.atgrand.functional.error.NoSuchElementError
 import com.atgrand.functional.option.IOption
 import com.atgrand.functional.option.none
 
-internal final class NilIterator implements IIterator {
+internal final class NilIterator implements IFuncIterator {
     public static const INSTANCE:NilIterator = new NilIterator();
 
     /**
@@ -31,7 +31,7 @@ internal final class NilIterator implements IIterator {
     /**
      * @inheritDoc
      */
-    public function get toList():IList {
+    public function get toList():IFuncList {
         return nil
     }
 

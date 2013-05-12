@@ -105,7 +105,7 @@ public class NilTest {
     [Test]
     public function testFlatMap():void {
         assertStrictlyEquals(nil, nil.flatMap(identity));
-        nil.flatMap(function (x:*):IList {
+        nil.flatMap(function (x:*):IFuncList {
             fail("FlatMap function must not be called.");
             return nil
         })
@@ -222,7 +222,7 @@ public class NilTest {
 
     [Test]
     public function testPrependAll():void {
-        const l:IList = list({}, {}, {});
+        const l:IFuncList = list({}, {}, {});
         assertEquals(l.size, nil.prependAll(l).size);
         for (var i:int = 0, n:int = l.size; i < n; ++i) {
             assertStrictlyEquals(l.get(i), nil.prependAll(l).get(i))

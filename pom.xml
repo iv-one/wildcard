@@ -26,7 +26,7 @@
         </developer>
     </developers>
 
-   <properties>
+    <properties>
         <version.flex>4.6.0.23201</version.flex>
         <version.flexmojos>4.0-SNAPSHOT</version.flexmojos>
         <version.player>13</version.player>
@@ -130,8 +130,8 @@
     </dependencies>
 
     <scm>
-        <connection>scm:git:git://github.com/ivan-dyachenko/should.git</connection>
-        <url>http://github.com/ivan-dyachenko/should</url>
+        <connection>scm:git:git://github.com/ivan-dyachenko/wildcard.git</connection>
+        <url>http://github.com/ivan-dyachenko/wildcard</url>
     </scm>
 
     <repositories>
@@ -176,7 +176,7 @@
             </snapshots>
         </repository>
     </repositories>
-    
+
     <pluginRepositories>
         <pluginRepository>
             <id>cortizone</id>

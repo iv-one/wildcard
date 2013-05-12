@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.atgrand.functional</groupId>
+    <artifactId>wildcard</artifactId>
+    <version>1.0.0</version>
+    <packaging>swc</packaging>
+
+    <description>The library supports functional development in ActionScript3</description>
+
+    <developers>
+        <developer>
+            <id>iv</id>
+            <name>Ivan Dyachenko</name>
+            <email>ivan.dyachenko at gmail.com</email>
+            <url>http://atgrand.com/</url>
+            <organization>AT&amp;PI</organization>
+            <organizationUrl>http://atgrand.com/</organizationUrl>
+            <roles>
+                <role>Author Developer</role>
+            </roles>
+            <timezone>+2</timezone>
+        </developer>
+    </developers>
+
+   <properties>
+        <version.flex>4.6.0.23201</version.flex>
+        <version.flexmojos>4.0-SNAPSHOT</version.flexmojos>
+        <version.player>13</version.player>
+
+        <dir.source.flex>src/main/flex</dir.source.flex>
+        <dir.source.flextest>src/test/flex</dir.source.flextest>
+        <dir.source.resources>src/main/resources</dir.source.resources>
+    </properties>
+
+    <parent>
+        <groupId>org.sonatype.flexmojos</groupId>
+        <artifactId>flexmojos-flex-super-pom</artifactId>
+        <version>4.0-SNAPSHOT</version>
+    </parent>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <sourceDirectory>${dir.source.flex}</sourceDirectory>
+        <testSourceDirectory>${dir.source.flextest}</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>${version.flexmojos}</version>
+                <extensions>true</extensions>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile-swc</goal>
+                            <goal>sources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <coverage>true</coverage>
+
+                    <swfVersion>${version.player}</swfVersion>
+                    <targetPlayer>10.0.0</targetPlayer>
+                    <debug>true</debug>
+                    <ditaSkip>true</ditaSkip>
+                    <reduceMergeABC>false</reduceMergeABC>
+                    <reduceMergeCF>false</reduceMergeCF>
+                    <reduceSortCPool>false</reduceSortCPool>
+                    <showWarnings>false</showWarnings>
+
+                    <localesSourcePath>${project.basedir}/src/main/resources/locales/{locale}</localesSourcePath>
+                    <localesCompiled>
+                        <locale>en_US</locale>
+                    </localesCompiled>
+
+                    <staticLinkRuntimeSharedLibraries>false</staticLinkRuntimeSharedLibraries>
+                    <verifyDigests>false</verifyDigests>
+                    <computeDigest>false</computeDigest>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.adobe.flex</groupId>
+                        <artifactId>compiler</artifactId>
+                        <version>${version.flex}</version>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
+
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>flex-framework</artifactId>
+            <version>${version.flex}</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>framework</artifactId>
+            <version>${version.flex}</version>
+            <type>swc</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>spark</artifactId>
+            <version>${version.flex}</version>
+            <type>swc</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atgrand.testing</groupId>
+            <artifactId>should</artifactId>
+            <version>1.0.0</version>
+            <type>swc</type>
+        </dependency>
+
+    </dependencies>
+
+    <scm>
+        <connection>scm:git:git://github.com/ivan-dyachenko/should.git</connection>
+        <url>http://github.com/ivan-dyachenko/should</url>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>cortizone</id>
+            <url>http://cortizone.googlecode.com/hg/maven-repositories/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sonatype-repository-flexgroup</id>
+            <url>https://repository.sonatype.org/content/groups/flexgroup/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sonatype-repository</id>
+            <url>https://repository.sonatype.org/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>ivan-dyachenko-repository</id>
+            <url>http://ivan-dyachenko.github.com/flash-mvn-repo/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>cortizone</id>
+            <url>http://cortizone.googlecode.com/hg/maven-repositories/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
